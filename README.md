@@ -1,1 +1,3 @@
-# Az_CLI_Commands
+# Az_CLI_Infra
+
+Creation of Infrastructure in Microsoft Azure Cloud using Azure CLI Commands
