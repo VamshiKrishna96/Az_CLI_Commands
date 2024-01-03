@@ -1,0 +1,65 @@
+# Login to azure account
+az login
+
+#View Subscriptions list
+az account subscription list
+
+# Set Subscription
+# change the active subscription using the subscription name
+az account set --subscription "My Demos"
+
+# change the active subscription using the subscription ID
+az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+
+# Creation of Resource Group
+echo "Creating AzureResource Group"
+
+RG = 'AZTESTRG2024'
+az group create -l eastus --name $RG
+
+# Creating azure virtual network and subnet
+echo "Creation of vnet and subnet"
+
+az network vnet create --resource-group $RG \
+--location eastus \
+--name $RG-vnet-1 \
+--address-prefix 10.0.0.0/16 \
+--subnet-name $RG-subnet-1 \
+--subnet-prefixes 10.0.0.0/24 \
+
+# Creation of second subnet
+
+az network vnet create --resource-group $RG \
+--location eastus \
+--name $RG-vnet-1 \
+--address-prefix 10.0.0.0/16 \
+--subnet-name $RG-subnet-2 \
+--subnet-prefixes 10.0.1.0/24
+
+# Creation of Third subnet
+
+az network vnet create --resource-group $RG \
+--location eastus \
+--name $RG-vnet-1 \
+--address-prefix 10.0.0.0/16 \
+--subnet-name $RG-subnet-3 \
+--subnet-prefixes 10.0.2.0/24
+
+
+#Creation of Azure Virtual Machine
+echo "Creation of Azure Virtual Machine"
+az vm create --name TESTVM01\
+--image win2019Datacenter \
+--size Standard_B2ms \
+--resource-group $RG \
+--location eastus \
+--name $RG-vnet-1 \
+--subnet-name $RG-subnet-2 \
+--admin-username testadmin \
+--admin-password "adminpassword" \ 
+#--authentication-type password \
+--nsg "" \
+--private-ip-address 10.0.1.100
+
+
